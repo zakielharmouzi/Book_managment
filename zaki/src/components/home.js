@@ -88,7 +88,7 @@ const Home = ({token}) => {
         
           ): (
             <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-              End User
+              haha no maidens hahaha
             </a>
               )}
     </div>
