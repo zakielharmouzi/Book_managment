@@ -8,6 +8,7 @@ import Layout from "./components/layout";
 import PageNotFound from "./components/pageNotFound";
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+import User_view from "./components/user_view";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -50,6 +51,7 @@ function AppWrapper() {
           <Route element={<ProtectedRoute token={token} />}>
             <Route path="/home" element={<Home token={token} />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/user_view" element={<User_view />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Route>

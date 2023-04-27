@@ -8,16 +8,28 @@ const Home = ({token}) => {
     let Navigate = useNavigate();
     const [user_role,setuser_role] = useState(null);
     const [user_email,setUser_email] = useState("");
+    const [user_name,setUser_name] = useState("");
     useEffect(() => {
         if (token) {
+          
             setUser_email(token.user.email);
             console.log(token.user.email);
+        }else{
+           try{
+            const token = JSON.parse(sessionStorage.getItem("token"));
+            if (token) {
+                setUser_email(token.user.email);
+                console.log(token.user.email);
+            }
+           }catch(error){
+               console.log(error);
+           }
         }
     }, [token]);
-    const get_role = async() => {
+    const get_data = async() => {
         const { data, error } = await supabase
         .from('users')
-        .select('role')
+        .select('first_name, last_name, role')
         .eq('email', user_email)
         console.log(data);
         if(error){
@@ -34,17 +46,17 @@ const Home = ({token}) => {
     }
     useEffect(() => {
         if (user_email) {
-            get_role().then((data) => {
+            get_data().then((data) => {
                 if(data.error){
                     console.log(data.error);
                 }else{
                     setuser_role(data.data[0].role);
+                    setUser_name(data.data[0].first_name);
                     console.log(data.data[0].role);
                 }
-            });
+              });
         }
     }, [user_email]);
-
     const logout = async () => {
         sessionStorage.removeItem("token");
         Navigate("/");
@@ -57,6 +69,7 @@ const Home = ({token}) => {
                 setuser_role(false);
             }
         }
+
     }, [user_role]);
     
     return (
@@ -81,15 +94,14 @@ const Home = ({token}) => {
       <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
         Blog
       </a>
+      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">{user_name}</a>
       {user_role ? (
             <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
                 Admin
             </a>
         
           ): (
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-              End User
-            </a>
+            <Link href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white" to="/user_view">user</Link>
               )}
     </div>
     <div>
