@@ -72,7 +72,7 @@ const App=({setToken})=> {
   else {
     console.log("data", data);
     setToken(data);
-    Navigate("/home")
+    Navigate("/homepage")
   }
 }
 

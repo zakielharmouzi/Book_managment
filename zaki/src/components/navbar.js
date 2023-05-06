@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { Link ,useNavigate} from 'react-router-dom';
 import { supabase } from "../supabaseClient";
 import "../tailwind.css";
+import LoadingSpinner from "./loading";
 
-const Home = ({token}) => {
+const Navbar = ({token}) => {
     let Navigate = useNavigate();
     const [user_role,setuser_role] = useState(null);
     const [user_email,setUser_email] = useState("");
     const [user_name,setUser_name] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         if (token) {
           
@@ -27,11 +29,13 @@ const Home = ({token}) => {
         }
     }, [token]);
     const get_data = async() => {
+      setIsLoading(true);
         const { data, error } = await supabase
         .from('users')
         .select('first_name, last_name, role')
         .eq('email', user_email)
         console.log(data);
+        setIsLoading(false);
         if(error){
             console.log(error);
             return {
@@ -71,37 +75,48 @@ const Home = ({token}) => {
         }
 
     }, [user_role]);
-    
+    const toggle = () => {
+  const menu = document.getElementById('menu');
+  menu.classList.toggle('hidden');
+}
+
     return (
-        <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-    <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>
-  </div>
-  <div class="block lg:hidden">
-    <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-    </button>
-  </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div class="text-sm lg:flex-grow">
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Docs
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Examples
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-        Blog
-      </a>
-      <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">{user_name}</a>
+       <>
+    {isLoading ? (
+      <LoadingSpinner/>
+    ) : (
+      <nav class="flex items-center justify-between flex-wrap bg-emerald-700 p-6">
+        <div class="flex items-center flex-shrink-0 text-white mr-6">
+          <img class="fill-current h-9 w-9 mr-2" width="54" height="54" viewBox="0 0 54 54" src="https://cdn.icon-icons.com/icons2/317/PNG/64/book-bookmark-icon_34486.png"/>
+          <span class="font-semibold text-xl tracking-tight">M6L Books</span>
+        </div>
+        <div class="block lg:hidden">
+          <button type="button" onClick={toggle} class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+          </button>
+        </div>
+        <div id="menu" class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden">
+          <div class="text-sm lg:flex-grow">
+            <Link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/home">Books</Link>
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+              events
+            </a>
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+              Posts
+            </a>
+            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+              Blog
+            </a>
+            {/* <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">{user_name}</a> */}
+          </div>
+    <div class="">
       {user_role ? (
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+            <a href="#responsive-header" class="block mt-4 mr-10 lg:inline-block lg:mt-0 text-white hover:text-white">
                 Admin
             </a>
         
           ): (
-            <Link href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white" to="/user_view">user</Link>
+            <Link href="#responsive-header" class="block mt-4 mr-5  lg:inline-block lg:mt-0 text-white hover:" to="/user_view">user</Link>
               )}
     </div>
     <div>
@@ -111,6 +126,9 @@ const Home = ({token}) => {
     </div>
   </div>
 </nav>
+      )} 
+</>
     );
+    
     }
-export default Home;
+export default Navbar;
