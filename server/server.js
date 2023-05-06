@@ -12,4 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", apirouter);
 
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
+
 app.listen(PORT, () => console.log(`Todo Server listening on port ${PORT}!`));

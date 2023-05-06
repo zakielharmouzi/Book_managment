@@ -1,4 +1,4 @@
-//make a simple page not found page
+
 const PageNotFound = () => {
     return (
         <div>
