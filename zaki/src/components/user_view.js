@@ -1,10 +1,11 @@
 import react from "react";
+import Navbar from "./navbar";
 
 const User_view = () => {
     return (
-        <div>
-            <h1>wawaaaaa </h1>
-        </div>
+        <>
+        <Navbar/>
+        </>
     );
 }
 export default User_view;
