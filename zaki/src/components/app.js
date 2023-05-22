@@ -4,7 +4,6 @@ import { supabase } from "../supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 
 
