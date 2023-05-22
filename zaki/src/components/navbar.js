@@ -63,6 +63,8 @@ const Navbar = ({token}) => {
     }, [user_email]);
     const logout = async () => {
         sessionStorage.removeItem("token");
+        await supabase.auth.signOut();
+        token(null);
         Navigate("/");
     };
     useEffect(() => {
@@ -97,10 +99,10 @@ const Navbar = ({token}) => {
         </div>
         <div id="menu" class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden">
           <div class="text-sm lg:flex-grow">
-            <Link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/home">Books</Link>
-            <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-              events
-            </a>
+            <Link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4" to="/homepage">Books</Link>
+            <Link class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 " to="/user_books">
+              Reserved books
+            </Link>
             <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
               Posts
             </a>
@@ -111,9 +113,9 @@ const Navbar = ({token}) => {
           </div>
     <div class="">
       {user_role ? (
-            <a href="#responsive-header" class="block mt-4 mr-10 lg:inline-block lg:mt-0 text-white hover:text-white">
+            <Link class="block mt-4 mr-10 lg:inline-block lg:mt-0 text-white hover:text-white" to="/admin_view">
                 Admin
-            </a>
+            </Link>
         
           ): (
             <Link href="#responsive-header" class="block mt-4 mr-5  lg:inline-block lg:mt-0 text-white hover:" to="/user_view">user</Link>

@@ -4,7 +4,10 @@ import "./index.css";
 import App from "./components/app";
 import Home from "./components/homepage";
 import Login from "./components/login";
+import User_books from "./components/user_books";
+import AdminView from "./components/admin_view";
 import Layout from "./components/layout";
+import Book from "./components/r_book";
 import PageNotFound from "./components/pageNotFound";
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { supabase } from "./supabaseClient";
@@ -50,8 +53,10 @@ function AppWrapper() {
           <Route path="/" element={<App setToken={setToken} />} />
           <Route element={<ProtectedRoute token={token} />}>
             <Route path="/homepage" element={<Home token={token} />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/r_book/:id" element={<Book />} />
+            <Route path="/user_books" element={<User_books />} />
             <Route path="/user_view" element={<User_view />} />
+            <Route path="/admin_view" element={<AdminView />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Route>
