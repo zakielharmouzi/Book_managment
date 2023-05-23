@@ -1,1 +1,1 @@
-# Book_managment First cd zaki folder and then run the script: npm run start and install all required dependencies for the app to function correctly
+# Book_managment This app manages and reserves real books scraped from Al akhawayn library website, To run locally irst cd zaki folder and then run the script: npm run start and install all required dependencies for the app to function correctly the server folder is incase we want to switch from supabase to something else.
