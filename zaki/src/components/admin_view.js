@@ -57,7 +57,7 @@ const AdminView = () => {
   const handleRemoveBook = async (bookId) => {
     setIsLoading(true);
     try {
-      const { error } = await supabase.from("books").delete().eq("id", bookId);
+      const { error } = await supabase.from("books").delete().eq("ID", bookId);
 
       if (error) {
         console.error(error);
